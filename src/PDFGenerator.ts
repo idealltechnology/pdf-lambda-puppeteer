@@ -19,8 +19,7 @@ export class PDFGenerator {
         margin: { top: '1in', right: '1in', bottom: '1in', left: '1in' },
       });
 
-      
-      const newData = await s3Client
+      const savedS3 = await s3Client
         .upload({
           Key: Math.ceil(Math.random() * 10000000) + '.pdf',
           Body: pdf,
@@ -29,14 +28,13 @@ export class PDFGenerator {
         })
         .promise();
 
-      if (!newData) {
+      if (!savedS3) {
         throw Error('there was an error writing the file');
       }
-      console.log(newData);
 
       return {
         statusCode: 200,
-        body: newData.Location,
+        body: savedS3.Location,
       };
     } catch (error) {
       console.error('Error : ', error);

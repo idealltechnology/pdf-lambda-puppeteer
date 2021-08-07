@@ -19,8 +19,6 @@ export class PDFGenerator {
         margin: { top: '1in', right: '1in', bottom: '1in', left: '1in' },
       });
 
-      /*  fs.writeFileSync('test.pdf', pdf); */
-
       const params = {
         Key: Math.ceil(Math.random() * 10000000) + '.pdf',
         Body: pdf,

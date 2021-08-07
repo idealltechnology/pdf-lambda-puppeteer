@@ -36,12 +36,8 @@ export class PDFGenerator {
       console.log(newData);
 
       return {
-        headers: {
-          'Content-type': 'application/pdf',
-        },
         statusCode: 200,
-        body: pdf.toString('base64'),
-        isBase64Encoded: true,
+        body: newData.Location,
       };
     } catch (error) {
       console.error('Error : ', error);

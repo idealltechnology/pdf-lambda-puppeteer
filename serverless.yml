@@ -1,9 +1,9 @@
 service: html-pdf-s3-upload
-disabledDeprecations:
-  - '*' # To disable all deprecation messages
+frameworkVersion: '2'
+
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs12.x
   profile: sezer-admin
   region: ${opt:region, 'eu-central-1'}
   endpointType: REGIONAL
@@ -15,7 +15,7 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     bucketName: ${self:custom.bucketName}
-    SLS_DEBUG: '*'
+
   iam:
     role:
       name: s3-role
@@ -37,7 +37,7 @@ custom:
   prune:
     automatic: true
     number: 5
-  bucketName: emails-121312312312
+  bucketName: emails-1213123123121
 
 functions:
   getPDF:

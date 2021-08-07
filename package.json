@@ -9,6 +9,7 @@
     "deploy-prod": "sls deploy --stage prod"
   },
   "dependencies": {
+    "aws-sdk": "^2.963.0",
     "chrome-aws-lambda": "^3.1.1",
     "handlebars": "^4.7.6",
     "puppeteer-core": "^3.3.0",

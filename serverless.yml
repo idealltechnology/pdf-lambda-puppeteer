@@ -1,6 +1,29 @@
 service:
   name: pdf-lambda-puppeteer
 
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: personal
+  region: eu-central-1
+  stage: dev
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    bucketName: ${self:custom.bucketName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: '*'
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-prune-plugin
+
 custom:
   webpack:
     webpackConfig: ./webpack.config.js
@@ -8,30 +31,23 @@ custom:
   prune:
     automatic: true
     number: 5
-
-plugins:
-  - serverless-webpack
-  - serverless-offline
-  - serverless-prune-plugin
-
-provider:
-  name: aws
-  runtime: nodejs12.x
-  profile: personal # Modify or remove accordingly
-  region: ${opt:region, 'ap-south-1'}
-  endpointType: REGIONAL
-  stage: ${opt:stage, 'dev'}
-  apiGateway:
-    binaryMediaTypes:
-      - "*/*"
-  environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+  tableName: player-points
+  bucketName: reservationEmails
+  s3Sync:
+    - bucketName: ${self:custom.bucketName}
 
 functions:
   getPDF:
     handler: handler.getPDF
-    memorySize: 1024 # Setting a higher RAM size to facilitate PDF generation
+    memorySize: 1024
     events:
       - http:
           method: get
           path: /getPDF
+
+resources:
+  Resources:
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}

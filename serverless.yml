@@ -1,23 +1,29 @@
-service:
-  name: pdf-lambda-puppeteer
-
+service: html-pdf-s3-upload
+disabledDeprecations:
+  - '*' # To disable all deprecation messages
 provider:
   name: aws
-  runtime: nodejs12.x
-  profile: personal
-  region: eu-central-1
-  stage: dev
+  runtime: nodejs14.x
+  profile: sezer-admin
+  region: ${opt:region, 'eu-central-1'}
+  endpointType: REGIONAL
+  stage: ${opt:stage, 'dev'}
+  lambdaHashingVersion: 20201221
   apiGateway:
     binaryMediaTypes:
       - '*/*'
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     bucketName: ${self:custom.bucketName}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - s3:*
-      Resource: '*'
+    SLS_DEBUG: '*'
+  iam:
+    role:
+      name: s3-role
+      statements:
+        - Effect: 'Allow'
+          Resource: '*'
+          Action:
+            - s3:*
 
 plugins:
   - serverless-webpack
@@ -31,7 +37,7 @@ custom:
   prune:
     automatic: true
     number: 5
-  bucketName: reservationEmails
+  bucketName: emails-121312312312
 
 functions:
   getPDF:

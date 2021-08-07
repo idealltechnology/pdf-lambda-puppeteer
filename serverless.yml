@@ -31,10 +31,7 @@ custom:
   prune:
     automatic: true
     number: 5
-  tableName: player-points
   bucketName: reservationEmails
-  s3Sync:
-    - bucketName: ${self:custom.bucketName}
 
 functions:
   getPDF:

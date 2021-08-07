@@ -19,14 +19,15 @@ export class PDFGenerator {
         margin: { top: '1in', right: '1in', bottom: '1in', left: '1in' },
       });
 
-      const params = {
-        Key: Math.ceil(Math.random() * 10000000) + '.pdf',
-        Body: pdf,
-        Bucket: bucket,
-        ContentType: 'application/pdf',
-      };
-
-      const newData = await s3Client.upload(params).promise();
+      
+      const newData = await s3Client
+        .upload({
+          Key: Math.ceil(Math.random() * 10000000) + '.pdf',
+          Body: pdf,
+          Bucket: bucket,
+          ContentType: 'application/pdf',
+        })
+        .promise();
 
       if (!newData) {
         throw Error('there was an error writing the file');

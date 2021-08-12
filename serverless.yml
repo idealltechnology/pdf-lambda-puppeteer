@@ -14,7 +14,7 @@ provider:
       - '*/*'
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    bucketName: ${self:custom.bucketName}
+    BUCKET_NAME: ${self:custom.bucketName}
 
   iam:
     role:
@@ -37,7 +37,7 @@ custom:
   prune:
     automatic: true
     number: 5
-  bucketName: rehal-umrah-reservations
+  bucketName: emails-1213123123121
 
 functions:
   getPDF:

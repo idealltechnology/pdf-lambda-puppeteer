@@ -47,10 +47,10 @@ functions:
       - http:
           method: post
           path: /pdf/link
-
-resources:
-  Resources:
-    DemoBucketUpload:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.bucketName}
+#resources:
+#  Resources:
+#    DemoBucketUpload:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: ${self:custom.bucketName}
+#

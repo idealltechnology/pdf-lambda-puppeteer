@@ -45,7 +45,7 @@ functions:
     memorySize: 1024
     events:
       - http:
-          method: get
+          method: post
           path: /pdf/link
 
 resources:

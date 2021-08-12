@@ -9,6 +9,6 @@
     "target": "es2017",
     "outDir": "lib"
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "handler.js"],
   "exclude": ["node_modules/**/*", ".serverless/**/*", ".webpack/**/*", "_warmup/**/*", ".vscode/**/*"]
 }

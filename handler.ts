@@ -1,13 +1,12 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { getTemplate } from './src/templates/pdf-template';
 import { Helper } from './src/Helper';
 import { S3 } from 'aws-sdk';
 const s3Client = new S3();
-const bucket = process.env.bucketName;
 
 export const getPDF: APIGatewayProxyHandler = async (event, _context) => {
   try {
-    const pdf = await Helper.getPDFBuffer(getTemplate({ name: 'Sezer' }), {
+    const { name, html, bucket } = JSON.parse(event.body);
+    const pdf = await Helper.getPDFBuffer(html, {
       format: 'A4',
       printBackground: true,
       margin: { top: '1in', right: '1in', bottom: '1in', left: '1in' },
@@ -15,7 +14,7 @@ export const getPDF: APIGatewayProxyHandler = async (event, _context) => {
 
     const savedS3 = await s3Client
       .upload({
-        Key: Math.ceil(Math.random() * 10000000) + '.pdf',
+        Key: name + '_' + Math.ceil(Math.random() * 10000000) + '.pdf',
         Body: pdf,
         Bucket: bucket,
         ContentType: 'application/pdf',
@@ -28,7 +27,7 @@ export const getPDF: APIGatewayProxyHandler = async (event, _context) => {
 
     return {
       statusCode: 200,
-      body: savedS3.Location,
+      body: JSON.stringify(savedS3),
     };
   } catch (error) {
     console.error('Error : ', error);

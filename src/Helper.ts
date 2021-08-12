@@ -1,14 +1,12 @@
-import * as chromium from "chrome-aws-lambda";
+import * as chromium from 'chrome-aws-lambda';
 
-import { GetPDFBuffer } from "./types/HelperTypes";
+import { GetPDFBuffer } from './types/HelperTypes';
 
 export class Helper {
   static getPDFBuffer: GetPDFBuffer = async (html: string, options: any) => {
     let browser = null;
     try {
-      const executablePath = process.env.IS_OFFLINE
-        ? null
-        : await chromium.executablePath;
+      const executablePath = process.env.IS_OFFLINE ? null : await chromium.executablePath;
       browser = await chromium.puppeteer.launch({
         args: chromium.args,
         executablePath,
@@ -16,7 +14,7 @@ export class Helper {
 
       const page = await browser.newPage();
       const loaded = page.waitForNavigation({
-        waitUntil: "load",
+        waitUntil: 'load',
       });
 
       await page.setContent(html);

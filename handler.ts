@@ -2,10 +2,10 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { Helper } from './src/Helper';
 import { S3 } from 'aws-sdk';
 const s3Client = new S3();
-
+const bucket = process.env.bucketName;
 export const getPDF: APIGatewayProxyHandler = async (event, _context) => {
   try {
-    const { name, html, bucket } = JSON.parse(event.body);
+    const { name, html } = JSON.parse(event.body);
     const pdf = await Helper.getPDFBuffer(html, {
       format: 'A4',
       printBackground: true,

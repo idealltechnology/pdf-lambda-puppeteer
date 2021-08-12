@@ -4,8 +4,8 @@ frameworkVersion: '2'
 provider:
   name: aws
   runtime: nodejs12.x
-  profile: sezer-admin
-  region: ${opt:region, 'eu-central-1'}
+  profile: sezer-ideall
+  region: ${opt:region, 'eu-west-1'}
   endpointType: REGIONAL
   stage: ${opt:stage, 'dev'}
   lambdaHashingVersion: 20201221
@@ -37,7 +37,7 @@ custom:
   prune:
     automatic: true
     number: 5
-  bucketName: emails-1213123123121
+  bucketName: rehal-umrah-reservations
 
 functions:
   getPDF:
@@ -47,10 +47,10 @@ functions:
       - http:
           method: post
           path: /pdf/link
-#resources:
-#  Resources:
-#    DemoBucketUpload:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: ${self:custom.bucketName}
-#
+
+resources:
+  Resources:
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
